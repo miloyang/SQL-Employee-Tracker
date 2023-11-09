@@ -20,7 +20,7 @@ Once in the correct folder, install the required packages and source all the req
 
 Once completed, enter "node server.js". This will initiate the prompt that will allow you to choose what you would like to do with the employee database. 
 
-You will be able to view all departments, view all roles, view all employees, add a department, add a role, and add an employee. 
+You will be able to view all departments, view all roles, view all employees, add a department, add a role, add an employee and update an employee. 
 
 Once you have selected what you would like to action, you will be able to see a series of data or prompts to add more data as you wish. 
 
@@ -28,7 +28,7 @@ Below is a screenshot of what you should see in your Terminal:
 ![Screenshot of the Terminal](assets/images/SQL-Employee-Tracker-Screenshot.png)
 
 Below is a link to a walkthrough video to assist with how to use the application:
-[Click here for the walkthrough video](https://drive.google.com/file/d/1C88JpOz78GJ_r7KpxK9IeeQvKA_HR9Ci/view)
+[Click here for the walkthrough video](https://drive.google.com/file/d/1nNPVsZZ2IK_kDSz6gy_cYbwRr9iYKWe4/view)
 
 ## Credits
 
