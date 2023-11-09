@@ -25,7 +25,7 @@ You will be able to view all departments, view all roles, view all employees, ad
 Once you have selected what you would like to action, you will be able to see a series of data or prompts to add more data as you wish. 
 
 Below is a screenshot of what you should see in your Terminal:
-![Screenshot of the Terminal](assets/images/SVG-viewer-screenshot.png)
+![Screenshot of the Terminal](assets/images/SQL-Employee-Tracker-Screenshot.png)
 
 Below is a link to a walkthrough video to assist with how to use the application:
 [Click here for the walkthrough video](https://drive.google.com/file/d/1C88JpOz78GJ_r7KpxK9IeeQvKA_HR9Ci/view)

@@ -98,7 +98,6 @@ const showEmployees = () => {
 
     connection.promise().query(sql)
         .then(([rows, fields]) => {
-        
             console.table(rows);
             promptUser();
         })
