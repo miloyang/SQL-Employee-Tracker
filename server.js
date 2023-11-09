@@ -69,7 +69,7 @@ const promptUser = () => {
             }
 
             else if (task === "View All Departments") {
-                viewDepartments();
+                showDepartments();
             }
 
             else if (task === "Add Department") {
@@ -269,4 +269,123 @@ const updateEmployee = () => {
             showEmployees();
         });
 };
+
+// function to show all roles
+const showRoles = () => {
+    console.log('Showing all roles');
+
+    const sql = `SELECT role.id, role.title, department.name AS department
+                 FROM role
+                 INNER JOIN department ON role.department_id = department.id`;
+
+    connection.promise().query(sql)
+        .then(([rows, fields]) => {
+            console.table(rows);
+            promptUser();
+        })
+        .catch((err) => {
+            console.error('Error executing query', err);
+            promptUser();
+        });
+};
+
+// function to add a role
+const addRole = () => {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'role',
+            message: "What is the role you want to add?",
+            validate: (value) => { if (value) { return true } else { return 'Please enter a new role to add' } }
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: "What is the salary of this role?",
+            validate: (value) => { if (value) { return true } else { return 'Please enter a valid salary' } }
+        }
+    ])
+        .then(answer => {
+            const params = [answer.role, answer.salary];
+
+            // grab dept from department table
+            const roleSql = `SELECT name, id FROM department`;
+
+            connection.promise().query(roleSql)
+                .then(([data, fields]) => {
+                    const dept = data.map(({ name, id }) => ({ name: name, value: id }));
+
+                    inquirer.prompt([
+                        {
+                            type: 'list',
+                            name: 'dept',
+                            message: "What department is this role in?",
+                            choices: dept
+                        }
+                    ])
+                        .then(deptChoice => {
+                            const dept = deptChoice.dept;
+                            params.push(dept);
+
+                            const sql = `INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)`;
+
+                            connection.promise().query(sql, params)
+                                .then(() => {
+                                    console.log(`Added ${answer.role} to roles!`);
+                                    showRoles();
+                                })
+                                .catch(err => {
+                                    console.error('Error executing query', err);
+                                    showRoles();
+                                });
+                        })
+                        .catch(err => {
+                            console.error('Error selecting department', err);
+                            showRoles();
+                        });
+                })
+                .catch(err => {
+                    console.error('Error selecting department', err);
+                    showRoles();
+                });
+        });
+};
+
+// function to show all departments
+const showDepartments = () => {
+    console.log('Showing all departments');
+    const sql = `SELECT department.id AS id, department.name AS department FROM department`;
+
+    connection.promise().query(sql)
+        .then(([rows, fields]) => {
+            console.table(rows);
+            promptUser();
+        })
+        .catch((err) => {
+            console.error('Error executing query:', err);
+            promptUser();
+        });
+};
+
+// function to add a department 
+addDepartment = () => {
+    inquirer.prompt([
+      {
+        type: 'input', 
+        name: 'addDept',
+        message: "What department do you want to add?",
+        validate: (value) => { if (value) { return true } else { return 'Please enter a valid department' } }
+      }
+    ])
+      .then(answer => {
+        const sql = `INSERT INTO department (name)
+                    VALUES (?)`;
+        connection.query(sql, answer.addDept, (err, result) => {
+          if (err) throw err;
+          console.log('Added ' + answer.addDept + " to departments!"); 
+  
+          showDepartments();
+      });
+    });
+  };
 
